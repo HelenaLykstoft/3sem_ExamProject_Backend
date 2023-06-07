@@ -17,6 +17,7 @@ public class EntityExample implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
         // Null args constructor
     public EntityExample() {
     }  

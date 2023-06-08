@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dk.javawithnoscript</groupId>
-    <artifactId>exam_backend</artifactId>
+    <artifactId>exambackend</artifactId>
     <version>1.0.1</version>
     <packaging>war</packaging>
 
-    <name>exam_backend</name>
+    <name>exambackend</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

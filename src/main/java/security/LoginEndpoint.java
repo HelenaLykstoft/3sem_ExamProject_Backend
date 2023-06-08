@@ -91,4 +91,27 @@ public class LoginEndpoint {
         return signedJWT.serialize();
 
     }
+
+    @POST
+    @Path("signup")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response signup(String jsonString) throws AuthenticationException, API_Exception {
+        String username;
+        String password;
+        try {
+            JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+            username = json.get("username").getAsString();
+            password = json.get("password").getAsString();
+        } catch (Exception e) {
+            throw new API_Exception("Malformed JSON Suplied",400,e);
+        }
+
+        try {
+            USER_FACADE.createUser(username,password);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return Response.ok(new Gson().toJson(username)).build();
+    }
 }

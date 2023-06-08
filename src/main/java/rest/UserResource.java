@@ -29,6 +29,7 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("msg")
     public String getInfoForAll() {
         return "{\"msg\":\"Hello anonymous person\"}";
     }

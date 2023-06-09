@@ -1,5 +1,7 @@
 package rest;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dtos.CRUDentityDTO;
 import facades.CRUDentityFacade;
 
@@ -16,22 +18,17 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CRUDentityResource {
-    private final CRUDentityFacade facade;
+
+    private final CRUDentityFacade facade = CRUDentityFacade.getCRUDentityFacade(emf);
     private static EntityManagerFactory emf;
-
-    @Context
-    SecurityContext securityContext;
-
-    public CRUDentityResource() {
-        facade = CRUDentityFacade.getCRUDentityFacade(emf);
-    }
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
     @GET
     @Path("all")
     public Response getAllCRUDentities() {
         List<CRUDentityDTO> entities = facade.getAllCRUDentities();
-        return Response.ok(entities).build();
+        return Response.ok().entity(entities).build();
     }
 
     @GET

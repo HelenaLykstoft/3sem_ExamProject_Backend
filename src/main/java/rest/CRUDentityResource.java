@@ -36,7 +36,7 @@ public class CRUDentityResource {
     public Response getCRUDentityById(@PathParam("id") int id) {
         CRUDentityDTO entity = facade.getCRUDentityById(id);
         if (entity != null) {
-            return Response.ok(entity).build();
+            return Response.ok().entity(entity).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -48,7 +48,7 @@ public class CRUDentityResource {
     public Response updateCRUDentity(@PathParam("id") int id, CRUDentityDTO dto) {
         CRUDentityDTO updatedEntity = facade.updateCRUDentity(id, dto.getName(), dto.getDescription());
         if (updatedEntity != null) {
-            return Response.ok(updatedEntity).build();
+            return Response.ok().entity(updatedEntity).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

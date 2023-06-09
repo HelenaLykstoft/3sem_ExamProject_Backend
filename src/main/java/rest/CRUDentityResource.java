@@ -1,4 +1,4 @@
-package resources;
+package rest;
 
 import dtos.CRUDentityDTO;
 import facades.CRUDentityFacade;

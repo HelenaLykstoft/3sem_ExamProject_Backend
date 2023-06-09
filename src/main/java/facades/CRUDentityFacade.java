@@ -114,4 +114,21 @@ public class CRUDentityFacade {
         }
         return false;
     }
+
+    private EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public CRUDentityDTO create(CRUDentityDTO crudentityDTO) {
+        CRUDentity crudentity = new CRUDentity(crudentityDTO.getName(),crudentityDTO.getDescription());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(crudentity);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new CRUDentityDTO(crudentity);
+    }
 }

@@ -2,6 +2,8 @@ package facades;
 
 import dtos.CRUDentityDTO;
 import entities.CRUDentity;
+import entities.User;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -25,26 +27,69 @@ public class CRUDentityFacade {
         return instance;
     }
 
-    public CRUDentityDTO createCRUDentity(String name, String description) {
+//    public CRUDentity createCRUDentity(String name, String description) {
+//        EntityManager em = emf_.createEntityManager();
+//        CRUDentity entity = null;
+//        CRUDentityDTO dto = null;
+//        try {
+//            entity = em.find(CRUDentity.class, name);
+//            if (entity == null) {
+//                entity = new CRUDentity(name, description);
+//                em.getTransaction().begin();
+//                em.persist(entity);
+//                em.getTransaction().commit();
+//                dto = new CRUDentityDTO(entity);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            em.close();
+//        }
+//        return entity;
+//    }
+
+//    public CRUDentity createCRUDentity(String name, String description) {
+//        EntityManager em = emf_.createEntityManager();
+//        CRUDentity entity = null;
+//        try{
+//            entity = em.find(CRUDentity.class, name);
+//            if(entity == null){
+//                entity = new CRUDentity(name,description);
+//                em.getTransaction().begin();
+//                em.persist(entity);
+//                em.getTransaction().commit();
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return entity;
+//    }
+
+    public CRUDentity createCRUDentity(String name, String description) {
         EntityManager em = emf_.createEntityManager();
         CRUDentity entity = null;
-        CRUDentityDTO dto = null;
         try {
-            entity = em.find(CRUDentity.class, name);
-            if (entity == null) {
+            TypedQuery<CRUDentity> query = em.createQuery("SELECT c FROM CRUDentity c WHERE c.name = :name", CRUDentity.class);
+            query.setParameter("name", name);
+            List<CRUDentity> resultList = query.getResultList();
+            if (resultList.isEmpty()) {
                 entity = new CRUDentity(name, description);
                 em.getTransaction().begin();
                 em.persist(entity);
                 em.getTransaction().commit();
-                dto = new CRUDentityDTO(entity);
+            } else {
+                // Handle the case when an entity with the given name already exists
+                // You can throw an exception, return null, or take any other appropriate action
+                return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             em.close();
         }
-        return dto;
+        return entity;
     }
+
 
     public CRUDentityDTO getCRUDentityById(int id) {
         EntityManager em = emf_.createEntityManager();

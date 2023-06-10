@@ -18,3 +18,12 @@ GET http://localhost:8080/quickstart/api/info
 
 ###
 GET http://localhost:8080/api/crud/all
+
+###
+POST http://localhost:8080/api/crud/create
+Content-Type: application/json
+
+{
+  "name": "name",
+  "description": "description"
+}

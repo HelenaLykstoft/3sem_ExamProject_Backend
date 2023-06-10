@@ -2,8 +2,12 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dtos.CRUDentityDTO;
+import errorhandling.API_Exception;
 import facades.CRUDentityFacade;
+import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
 import javax.annotation.security.RolesAllowed;
@@ -74,6 +78,35 @@ public class CRUDentityResource {
         }
     }
 
+//    @POST
+//    @Path("create")
+//    public Response createCRUDentity(CRUDentityDTO dto) {
+//        CRUDentityDTO createdEntity = facade.createCRUDentity(dto.getName(), dto.getDescription());
+//        return Response.ok().entity(createdEntity).build();
+//    }
+
+    @POST
+    @Path("create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createCRUDentity(String jsonString) throws AuthenticationException, API_Exception {
+        String name;
+        String description;
+        try {
+            JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+            name = json.get("name").getAsString();
+            description = json.get("description").getAsString();
+        } catch (Exception e) {
+            throw new API_Exception("Malformed JSON Suplied",400,e);
+        }
+
+        try {
+            facade.createCRUDentity(name,description);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return Response.ok(new Gson().toJson(name)).build();
+    }
 
 }
 

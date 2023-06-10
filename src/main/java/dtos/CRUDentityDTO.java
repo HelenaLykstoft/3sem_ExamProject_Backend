@@ -49,7 +49,16 @@ public class CRUDentityDTO {
 
     public static List<CRUDentityDTO> getDtos(List<CRUDentity> entityList) {
         List<CRUDentityDTO> dtoList = new ArrayList();
-        entityList.forEach(entity -> dtoList.add(new CRUDentityDTO(entity)));
+        entityList.forEach(CRUDentity -> dtoList.add(new CRUDentityDTO(CRUDentity)));
         return dtoList;
+    }
+
+    @Override
+    public String toString() {
+        return "CRUDentityDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

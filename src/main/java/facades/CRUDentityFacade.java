@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CRUDentityFacade {
 
-    private static EntityManagerFactory emf;
+    private static EntityManagerFactory emf_;
     private static CRUDentityFacade instance;
 
     // Null args constructor
@@ -17,16 +17,16 @@ public class CRUDentityFacade {
     }
 
     // This method returns an instance of the CRUDentityFacade class
-    public static CRUDentityFacade getCRUDentityFacade(EntityManagerFactory _emf) {
+    public static CRUDentityFacade getCRUDentityFacade(EntityManagerFactory EMF) {
         if (instance == null) {
-            emf = _emf;
+            emf_ = EMF;
             instance = new CRUDentityFacade();
         }
         return instance;
     }
 
     public CRUDentityDTO createCRUDentity(String name, String description) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = emf_.createEntityManager();
         CRUDentity entity = null;
         CRUDentityDTO dto = null;
         try {
@@ -47,7 +47,7 @@ public class CRUDentityFacade {
     }
 
     public CRUDentityDTO getCRUDentityById(int id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = emf_.createEntityManager();
         try {
             CRUDentity entity = em.find(CRUDentity.class, id);
             if (entity != null) {
@@ -62,7 +62,7 @@ public class CRUDentityFacade {
     }
 
     public List<CRUDentityDTO> getAllCRUDentities() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = emf_.createEntityManager();
         try {
             TypedQuery<CRUDentity> query = em.createQuery("SELECT e FROM CRUDentity e", CRUDentity.class);
             List<CRUDentity> entityList = query.getResultList();
@@ -76,7 +76,7 @@ public class CRUDentityFacade {
     }
 
     public CRUDentityDTO updateCRUDentity(int id, String name, String description) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = emf_.createEntityManager();
         CRUDentity entity = null;
         CRUDentityDTO dto = null;
         try {
@@ -97,7 +97,7 @@ public class CRUDentityFacade {
     }
 
     public boolean deleteCRUDentity(int id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = emf_.createEntityManager();
         CRUDentity entity = null;
         try {
             entity = em.find(CRUDentity.class, id);
@@ -116,7 +116,7 @@ public class CRUDentityFacade {
     }
 
     private EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return emf_.createEntityManager();
     }
 
     public CRUDentityDTO create(CRUDentityDTO crudentityDTO) {

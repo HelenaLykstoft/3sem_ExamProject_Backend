@@ -56,7 +56,6 @@ public class CRUDentityResource {
 
     @PUT
     @Path("update/{id}")
-    @RolesAllowed("user")
     public Response updateCRUDentity(@PathParam("id") int id, CRUDentityDTO dto) {
         CRUDentityDTO updatedEntity = facade.updateCRUDentity(id, dto.getName(), dto.getDescription());
         if (updatedEntity != null) {
@@ -68,7 +67,6 @@ public class CRUDentityResource {
 
     @DELETE
     @Path("delete/{id}")
-    @RolesAllowed("user")
     public Response deleteCRUDentity(@PathParam("id") int id) {
         boolean deleted = facade.deleteCRUDentity(id);
         if (deleted) {

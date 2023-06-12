@@ -2,7 +2,6 @@ package facades;
 
 import dtos.CRUDentityDTO;
 import entities.CRUDentity;
-import entities.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -94,10 +93,10 @@ public class CRUDentityFacade {
     public CRUDentityDTO getCRUDentityById(int id) {
         EntityManager em = emf_.createEntityManager();
         try {
-            CRUDentity entity = em.find(CRUDentity.class, id);
-            if (entity != null) {
-                return new CRUDentityDTO(entity);
-            }
+            TypedQuery<CRUDentity> query = em.createQuery("SELECT e FROM CRUDentity e WHERE e.id = :id", CRUDentity.class);
+            query.setParameter("id", id);
+            CRUDentity entity = (CRUDentity) query.getSingleResult();
+            return new CRUDentityDTO(entity);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

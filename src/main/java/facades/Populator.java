@@ -1,11 +1,11 @@
 
 package facades;
 
-import dtos.CRUDentityDTO;
-import dtos.ExampleDTO;
-import entities.CRUDentity;
-import entities.EntityExample;
+import dtos.RentalDTO;
+import entities.Rental;
+
 import javax.persistence.EntityManagerFactory;
+
 import utils.EMF_Creator;
 
 public class Populator {
@@ -17,9 +17,9 @@ public class Populator {
 //        facadeExample.create(new ExampleDTO(new EntityExample("Firstname 1", "Lastname 1")));
 //        facadeExample.create(new ExampleDTO(new EntityExample("Firstname 2", "Lastname 2")));
 //        facadeExample.create(new ExampleDTO(new EntityExample("Firstname 3", "Lastname 3")));
-        CRUDentityFacade crudentityFacade = CRUDentityFacade.getCRUDentityFacade(emf);
-        CRUDentity cruDentity = new CRUDentity("Helena", "Paris");
-        crudentityFacade.create(new CRUDentityDTO(cruDentity));
+        RentalFacade rentalFacade = RentalFacade.getRentalFacade(emf);
+        Rental rental = new Rental("24-10-1999", "24-10-2024",20000,5000, "Helena");
+        rentalFacade.create(new RentalDTO(rental));
 
     }
     

@@ -100,16 +100,20 @@ public class LoginEndpoint {
     public Response signup(String jsonString) throws AuthenticationException, API_Exception {
         String username;
         String password;
+        int phone;
+        String job;
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             username = json.get("username").getAsString();
             password = json.get("password").getAsString();
+            phone = json.get("phone").getAsInt();
+            job = json.get("job").getAsString();
         } catch (Exception e) {
             throw new API_Exception("Malformed JSON Suplied",400,e);
         }
 
         try {
-            USER_FACADE.createUser(username,password);
+            USER_FACADE.createUser(username,password,phone,job);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -1,6 +1,8 @@
 package dtos;
 
+import entities.House;
 import entities.Rental;
+import entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +15,13 @@ public class RentalDTO {
     private int priceAnnual;
     private int deposit;
     private String contactPerson;
+    private List<User> userList;
+    private HouseDTO houseDTO;
 
 
     // Constructor
 
-
-    public RentalDTO(Rental rental){
+    public RentalDTO(Rental rental) {
         if(rental.getId() != null)
             this.id = rental.getId();
         this.startDate = rental.getStartDate();
@@ -35,6 +38,16 @@ public class RentalDTO {
         this.deposit = deposit;
         this.contactPerson = contactPerson;
     }
+
+//    public RentalDTO(String startDate, String endDate, int priceAnnual, int deposit, String contactPerson, List<User> userList) {
+//        this.startDate = startDate;
+//        this.endDate = endDate;
+//        this.priceAnnual = priceAnnual;
+//        this.deposit = deposit;
+//        this.contactPerson = contactPerson;
+//        this.userList = userList;
+//    }
+
 
 
     // Getters and setters
@@ -86,6 +99,22 @@ public class RentalDTO {
 
     public void setContactPerson(String contactPerson) {
         this.contactPerson = contactPerson;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public HouseDTO getHouseDTO() {
+        return houseDTO;
+    }
+
+    public void setHouseDTO(HouseDTO houseDTO) {
+        this.houseDTO = houseDTO;
     }
 
     public static List<RentalDTO> getDtos(List<Rental> entityList) {

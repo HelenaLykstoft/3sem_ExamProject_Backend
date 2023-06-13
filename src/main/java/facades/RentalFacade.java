@@ -1,7 +1,10 @@
 package facades;
 
+import dtos.HouseDTO;
 import dtos.RentalDTO;
+import entities.House;
 import entities.Rental;
+import entities.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -112,10 +115,10 @@ public class RentalFacade {
     public void deleteRental(int id) {
         EntityManager em = emf_.createEntityManager();
         try {
-            Rental entity = em.find(Rental.class, id);
-            if (entity != null) {
+            Rental rental = em.find(Rental.class, id);
+            if (rental != null) {
                 em.getTransaction().begin();
-                em.remove(entity);
+                em.remove(rental);
                 em.getTransaction().commit();
             }
         } catch (Exception e) {
@@ -129,12 +132,28 @@ public class RentalFacade {
         return emf_.createEntityManager();
     }
 
-    public RentalDTO create(RentalDTO rentalDTO) {
-        Rental rental = new Rental(rentalDTO.getStartDate(), rentalDTO.getEndDate(), rentalDTO.getPriceAnnual(), rentalDTO.getDeposit(), rentalDTO.getContactPerson());
+    public RentalDTO create(RentalDTO rentalDTO, HouseDTO houseDTO) {
+        House house = new House(houseDTO.getAddress(),houseDTO.getCity(),houseDTO.getNumberOfRooms());
+        Rental rental = new Rental(rentalDTO.getStartDate(), rentalDTO.getEndDate(), rentalDTO.getPriceAnnual(), rentalDTO.getDeposit(), rentalDTO.getContactPerson(), house);
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(rental);
+            em.persist(house);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new RentalDTO(rental);
+    }
+
+    public RentalDTO addTenantToRental(int rentalId, String userName) {
+        EntityManager em = getEntityManager();
+        Rental rental = em.find(Rental.class, rentalId);
+        User user = em.find(User.class, userName);
+        try {
+            em.getTransaction().begin();
+            rental.addUser(user);
             em.getTransaction().commit();
         } finally {
             em.close();

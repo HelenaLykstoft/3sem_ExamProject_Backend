@@ -4,6 +4,7 @@
     <!-- DO NOT RENAME THE PERSISTENCE UNIT -->
     <persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
         <class>entities.Rental</class>
+        <class>entities.House</class>
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <!--    <class>entities.EntityExampleample</class>-->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>

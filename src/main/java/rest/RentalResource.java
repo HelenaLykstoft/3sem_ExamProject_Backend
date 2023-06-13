@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dtos.HouseDTO;
 import dtos.RentalDTO;
 import entities.Rental;
 import errorhandling.API_Exception;
@@ -68,14 +69,9 @@ public class RentalResource {
     @Path("delete/{id}")
     public void deleteRental(@PathParam("id") int id) {
         facade.deleteRental(id);
+        return ;
     }
 
-//    @POST
-//    @Path("create")
-//    public Response createCRUDentity(CRUDentityDTO dto) {
-//        CRUDentityDTO createdEntity = facade.createCRUDentity(dto.getName(), dto.getDescription());
-//        return Response.ok().entity(createdEntity).build();
-//    }
 
     @POST
     @Path("create")
@@ -88,6 +84,10 @@ public class RentalResource {
         int deposit;
         String contactPerson;
         RentalDTO rentalDTO = null;
+        String address;
+        String city;
+        int numberOfRooms;
+        HouseDTO houseDTO = null;
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             startDate = json.get("startDate").getAsString();
@@ -95,17 +95,40 @@ public class RentalResource {
             priceAnnual = json.get("priceAnnual").getAsInt();
             deposit = json.get("deposit").getAsInt();
             contactPerson = json.get("contactPerson").getAsString();
+            address = json.get("address").getAsString();
+            city = json.get("city").getAsString();
+            numberOfRooms = json.get("numberOfRooms").getAsInt();
+            houseDTO = new HouseDTO(address, city, numberOfRooms);
             rentalDTO = new RentalDTO(startDate, endDate, priceAnnual, deposit, contactPerson);
         } catch (Exception e) {
             throw new API_Exception("Malformed JSON Suplied",400,e);
         }
-
         try {
-            RentalDTO rentalDTO1 = facade.create(rentalDTO);
+            RentalDTO rentalDTO1 = facade.create(rentalDTO, houseDTO);
+            return Response.ok(new Gson().toJson(rentalDTO1)).build();
         } catch (Exception ex) {
             ex.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("An error occurred during rental creation.")
+                    .build();
         }
-        return Response.ok(new Gson().toJson(startDate)).build();
+    }
+
+    @PUT
+    @Path("addTenantToRental/{rentalId}/{userName}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addTenantToRental(@PathParam("rentalId") int rentalId, @PathParam("userName") String userName, String jsonString) throws AuthenticationException, API_Exception {
+        RentalDTO rentalDTO = null;
+        try {
+            JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+            userName = json.get("userName").getAsString();
+            rentalId = json.get("rentalId").getAsInt();
+            rentalDTO = facade.addTenantToRental(rentalId, userName);
+        } catch (Exception e) {
+            throw new API_Exception("Malformed JSON Suplied",400,e);
+        }
+        return Response.ok(new Gson().toJson(rentalDTO)).build();
     }
 
 }

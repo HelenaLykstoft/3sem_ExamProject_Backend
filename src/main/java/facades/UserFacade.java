@@ -38,13 +38,13 @@ public class UserFacade {
         return user;
     }
 
-    public User createUser(String username, String password) {
+    public User createUser(String username, String password, int phone, String job) {
         EntityManager em = emf.createEntityManager();
         User user = null;
         try{
             user = em.find(User.class, username);
             if(user == null){
-                user = new User(username,password);
+                user = new User(username,password,phone,job);
                 user.addRole(getUserRole());
                 em.getTransaction().begin();
                 em.persist(user);

@@ -20,9 +20,9 @@ public class SetupTestUsers {
     // Also, either delete this file, when users are created or rename and add to .gitignore
     // TODO Whatever you do DO NOT COMMIT and PUSH with the real passwords
 
-    User user = new User("user", "pw#1");
-    User admin = new User("admin", "pw#ad");
-    User both = new User("user_admin", "pw#ad1");
+    User user = new User("user", "pw#1",12233445,"Datamatiker");
+    User admin = new User("admin", "pw#ad",24242424,"Datamatiker");
+    User both = new User("user_admin", "pw#ad1",28308990,"Admin");
 
     //  Statmenet retrieves user passwords and checks to make sure they DON'T match the above passwords.
     if(admin.getUserPass().equals("pw#1")||user.getUserPass().equals("pw#ad")||both.getUserPass().equals("pw#ad1"))

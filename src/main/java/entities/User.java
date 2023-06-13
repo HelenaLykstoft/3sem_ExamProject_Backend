@@ -28,11 +28,25 @@ public class User implements Serializable {
   @Column(name = "user_pass")
   private String userPass;
 
+
+
   @JoinTable(name = "user_roles", joinColumns = {
     @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
     @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
+
+  @Column(name = "phone")
+  private int phone;
+
+  @Column(name = "job")
+  private String job;
+
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name = "users_rentals",
+          joinColumns = @JoinColumn(name = "user_user_name"),
+          inverseJoinColumns = @JoinColumn(name = "rentals_id"))
+  private List<Rental> rentals = new ArrayList<>();
 
 
   // Method that returns roles as strings.
@@ -56,9 +70,11 @@ public class User implements Serializable {
     }
 
     // Constructor
-  public User(String userName, String userPass) {
+  public User(String userName, String userPass, int phone, String job) {
     this.userName = userName;
     this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
+    this.phone = phone;
+    this.job = job;
   }
 
     // Getters & Setters
@@ -78,12 +94,36 @@ public class User implements Serializable {
     this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());;
   }
 
+  public int getPhone() {
+    return phone;
+  }
+
+  public void setPhone(int phone) {
+    this.phone = phone;
+  }
+
+  public String getJob() {
+    return job;
+  }
+
+  public void setJob(String job) {
+    this.job = job;
+  }
+
   public List<Role> getRoleList() {
     return roleList;
   }
 
   public void setRoleList(List<Role> roleList) {
     this.roleList = roleList;
+  }
+
+  public List<Rental> getRentals() {
+    return rentals;
+  }
+
+  public void setRentals(List<Rental> rentals) {
+    this.rentals = rentals;
   }
 
 

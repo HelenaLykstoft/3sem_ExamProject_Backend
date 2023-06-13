@@ -22,12 +22,16 @@ POST http://localhost:8080/api/crud/create
 Content-Type: application/json
 
 {
-  "id": 2,
-  "startDate": "22-11-2023",
-  "endDate": "23-11-2024",
-  "priceAnnual": "30000",
-  "deposit": "700",
-  "contactPerson": "Hanne"
+  "id": 1,
+  "startDate": "24-07-2023",
+  "endDate": "27-08-2024",
+  "priceAnnual": "60000",
+  "deposit": "900",
+  "contactPerson": "Blubla",
+  "houseid": 1,
+  "address": "Hovedgaden 1",
+  "city": "København",
+  "numberOfRooms": "3"
 }
 
 ###
@@ -40,5 +44,17 @@ Content-Type: application/json
   "name": "Tester",
   "description": "description"
 }
+###
+
+PUT http://localhost:8080/api/crud/addTenantToRental
+Content-Type: application/json
+
+{
+  "rentalId": 1,
+  "userName": "user"
+}
+###
+DELETE http://localhost:8080/api/crud/delete/1
+
 ###
 

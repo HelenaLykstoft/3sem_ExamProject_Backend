@@ -130,5 +130,6 @@ public class RentalFacade {
             }
             return new RentalDTO(rental);
         }
-    }
+
+}
 

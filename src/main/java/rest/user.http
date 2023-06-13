@@ -22,14 +22,14 @@ POST http://localhost:8080/api/crud/create
 Content-Type: application/json
 
 {
-  "startDate": "24-07-2024",
-  "endDate": "25-11-2027",
-  "priceAnnual": "90000",
-  "deposit": "632",
-  "contactPerson": "Helena",
-  "address": "Lyngbyvej 32",
-  "city": "Lyngby",
-  "numberOfRooms": "7"
+  "startDate": "startDatetest",
+  "endDate": "TEEEST",
+  "priceAnnual": "1230",
+  "deposit": "10",
+  "contactPerson": "Bunny",
+  "address": "Randomvej 12",
+  "city": "Gentofte",
+  "numberOfRooms": "5"
 }
 
 ###
@@ -38,10 +38,16 @@ PUT http://localhost:8080/api/crud/update/1
 Content-Type: application/json
 
 {
-    "id": 1,
-  "name": "Tester",
-  "description": "description"
+  "startDate": "startDatetesting",
+  "endDate": "TEEEST",
+  "priceAnnual": "1230",
+  "deposit": "10",
+  "contactPerson": "Bunny",
+  "address": "Randomvej 12",
+  "city": "Gentofte",
+  "numberOfRooms": "5"
 }
+
 ###
 
 PUT http://localhost:8080/api/crud/addTenantToRental

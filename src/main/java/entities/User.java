@@ -127,10 +127,10 @@ public class User implements Serializable {
   }
 
 
-
     // A setRole method rewritten to add a role to roleList.
   public void addRole(Role userRole) {
     roleList.add(userRole);
   }
+
 
 }

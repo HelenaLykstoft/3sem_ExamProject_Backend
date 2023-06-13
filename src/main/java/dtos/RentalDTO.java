@@ -29,14 +29,16 @@ public class RentalDTO {
         this.priceAnnual = rental.getPriceAnnual();
         this.deposit = rental.getDeposit();
         this.contactPerson = rental.getContactPerson();
+        this.houseDTO = new HouseDTO(rental.getHouse().getAddress(), rental.getHouse().getCity(), rental.getHouse().getNumberOfRooms());
     }
 
-    public RentalDTO(String startDate, String endDate, int priceAnnual, int deposit, String contactPerson) {
+    public RentalDTO(String startDate, String endDate, int priceAnnual, int deposit, String contactPerson, HouseDTO houseDTO) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.priceAnnual = priceAnnual;
         this.deposit = deposit;
         this.contactPerson = contactPerson;
+        this.houseDTO = houseDTO;
     }
 
 //    public RentalDTO(String startDate, String endDate, int priceAnnual, int deposit, String contactPerson, List<User> userList) {
@@ -117,10 +119,10 @@ public class RentalDTO {
         this.houseDTO = houseDTO;
     }
 
-    public static List<RentalDTO> getDtos(List<Rental> entityList) {
-        List<RentalDTO> dtoList = new ArrayList();
-        entityList.forEach(Rental -> dtoList.add(new RentalDTO(Rental)));
-        return dtoList;
+    public static List<RentalDTO> getDtos(List<Rental> rentalList) {
+        List<RentalDTO> rentalDTOS = new ArrayList<>();
+        rentalList.forEach(Rental -> rentalDTOS.add(new RentalDTO(Rental)));
+        return rentalDTOS;
     }
 
     @Override

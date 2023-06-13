@@ -22,16 +22,14 @@ POST http://localhost:8080/api/crud/create
 Content-Type: application/json
 
 {
-  "id": 1,
-  "startDate": "24-07-2023",
-  "endDate": "27-08-2024",
-  "priceAnnual": "60000",
-  "deposit": "900",
-  "contactPerson": "Blubla",
-  "houseid": 1,
-  "address": "Hovedgaden 1",
-  "city": "København",
-  "numberOfRooms": "3"
+  "startDate": "24-07-2024",
+  "endDate": "25-11-2027",
+  "priceAnnual": "90000",
+  "deposit": "632",
+  "contactPerson": "Helena",
+  "address": "Lyngbyvej 32",
+  "city": "Lyngby",
+  "numberOfRooms": "7"
 }
 
 ###

@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dtos.HouseDTO;
 import dtos.RentalDTO;
-import entities.Rental;
 import errorhandling.API_Exception;
 import facades.RentalFacade;
 import security.errorhandling.AuthenticationException;
@@ -39,9 +38,18 @@ public class RentalResource {
 
     @GET
     @Path("all")
-    public String getAllRentals() {
-        return GSON.toJson(facade.getAllRentals());
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllRentals() {
+        List<RentalDTO> rentalDTOList = facade.getAllRentals();
+        return Response.ok().entity(rentalDTOList).build();
     }
+
+//    @GET
+//    @Path("all/{id}")
+//    public String getAllHouseRentals(@PathParam("id") int id) {
+//        HouseFacade houseFacade = HouseFacade.getHouseFacade(EMF);
+//        return GSON.toJson(houseFacade.getAllHouses(id));
+//    }
 
     @GET
     @Path("{id}")
@@ -99,7 +107,7 @@ public class RentalResource {
             city = json.get("city").getAsString();
             numberOfRooms = json.get("numberOfRooms").getAsInt();
             houseDTO = new HouseDTO(address, city, numberOfRooms);
-            rentalDTO = new RentalDTO(startDate, endDate, priceAnnual, deposit, contactPerson);
+            rentalDTO = new RentalDTO(startDate, endDate, priceAnnual, deposit, contactPerson, houseDTO);
         } catch (Exception e) {
             throw new API_Exception("Malformed JSON Suplied",400,e);
         }

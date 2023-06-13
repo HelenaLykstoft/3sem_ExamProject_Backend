@@ -1,13 +1,19 @@
 package entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "house")
-public class House {
+@NamedQuery(name = "house.deleteAllRows", query = "DELETE from House")
+
+public class House implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "houseid", nullable = false)
     private int houseid;
 
     @Column(name = "address")
@@ -31,6 +37,10 @@ public class House {
         this.address = address;
         this.city = city;
         this.numberOfRooms = numberOfRooms;
+    }
+
+    public int getHouseid() {
+        return houseid;
     }
 
     public void setHouseid(int id) {
